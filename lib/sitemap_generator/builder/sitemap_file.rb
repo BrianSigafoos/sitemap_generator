@@ -108,6 +108,8 @@ module SitemapGenerator
           @news_count += 1
         end
 
+        @xml_content = +@xml_content  # The unary plus operator duplicates a frozen string
+
         # Add the XML to the sitemap
         @xml_content << xml
         @filesize += SitemapGenerator::Utilities.bytesize(xml)

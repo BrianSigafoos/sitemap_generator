@@ -13,7 +13,9 @@ module SitemapGenerator
         @link_count = 0
         @sitemaps_link_count = 0
         @xml_content = +'' # XML urlset content
-        @xml_wrapper_start = +<<-HTML
+
+        # Assign a mutable string by duplicating the heredoc
+        @xml_wrapper_start = <<-HTML.dup
           <?xml version="1.0" encoding="UTF-8"?>
             <sitemapindex
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -22,6 +24,7 @@ module SitemapGenerator
               xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
             >
         HTML
+
         @xml_wrapper_start.gsub!(/\s+/, ' ').gsub!(/ *> */, '>').strip!
         @xml_wrapper_end   = %q[</sitemapindex>]
         @filesize = SitemapGenerator::Utilities.bytesize(@xml_wrapper_start) + SitemapGenerator::Utilities.bytesize(@xml_wrapper_end)
